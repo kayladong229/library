@@ -1,34 +1,19 @@
 function Book(title, author, year, pages, read) {
-    this.title = title
-    this.author = author
-    this.year = year
-    this.pages = pages
-    this.read = read
+  this.title = title;
+  this.author = author;
+  this.year = year;
+  this.pages = pages;
+  this.read = read;
 }
 
-const library = [
-    // {
-    //     title: "The Hobbit",
-    //     author: "J.R.R. Tolkien",
-    //     year: 1937,
-    //     pages: 295,
-    //     read: true,
-    // },
-    // {
-    //     title: `The Hitchhiker's Guide to the Galaxy`,
-    //     author: "Douglas Adams",
-    //     year: 1979,
-    //     pages: 350,
-    //     read: false,
-    // },
-];
+const library = [];
 
 const bookInfo = document.querySelector(".book-info");
 
 const newBookBtn = document.querySelector(".show-modal");
 const bookDialog = document.querySelector(".book-dialog");
 newBookBtn.addEventListener("click", () => {
-    bookDialog.showModal();
+  bookDialog.showModal();
 });
 
 const bookForm = document.getElementById("book-form");
@@ -39,66 +24,95 @@ const newPages = document.getElementById("pages");
 const newRead = document.getElementById("read");
 
 function addBook() {
-    const newBook = new Book(newTitle.value, newAuthor.value, newYear.value, newPages.value, newRead.checked);
-    console.log(newBook);
-    library.push(newBook);
+  const newBook = new Book(
+    newTitle.value,
+    newAuthor.value,
+    newYear.value,
+    newPages.value,
+    newRead.checked
+  );
+  console.log(newBook);
+  library.push(newBook);
 }
 
 bookForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    bookDialog.close();
-    addBook();
-    bookInfo.textContent = "";
-    displayBooks();
+  e.preventDefault();
+  bookDialog.close();
+  addBook();
+  bookInfo.textContent = "";
+  displayBooks();
 });
 
 function displayBooks() {
-    for (let i = 0; i < library.length; i++) {
-        const bookRow = document.createElement("tr");
-        bookInfo.appendChild(bookRow);
+  for (let i = 0; i < library.length; i++) {
+    const bookRow = document.createElement("tr");
+    bookInfo.appendChild(bookRow);
 
-        const bookTitle = document.createElement("td");
-        bookTitle.setAttribute("class", "book-title");
-        bookTitle.textContent = library[i].title;
+    const bookTitle = document.createElement("td");
+    bookTitle.setAttribute("class", "book-title");
+    bookTitle.textContent = library[i].title;
 
-        const bookAuthor = document.createElement("td");
-        bookAuthor.setAttribute("class", "book-author");
-        bookAuthor.textContent = library[i].author;
+    const bookAuthor = document.createElement("td");
+    bookAuthor.setAttribute("class", "book-author");
+    bookAuthor.textContent = library[i].author;
 
-        const bookYear = document.createElement("td");
-        bookYear.setAttribute("class", "book-year");
-        bookYear.textContent = library[i].year;
+    const bookYear = document.createElement("td");
+    bookYear.setAttribute("class", "book-year");
+    bookYear.textContent = library[i].year;
 
-        const bookPages = document.createElement("td");
-        bookPages.setAttribute("class", "book-pages");
-        bookPages.textContent = library[i].pages;
+    const bookPages = document.createElement("td");
+    bookPages.setAttribute("class", "book-pages");
+    bookPages.textContent = library[i].pages;
 
-        const bookStatus = document.createElement("td");
-        bookStatus.setAttribute("class", "book-status");
-        if (library[i].read === true) {
-            bookStatus.textContent = "Read";
-        } else {
-            bookStatus.textContent = "Unread";
-        }
+    const bookStatus = document.createElement("td");
+    bookStatus.setAttribute("class", "book-status");
 
-        const readButtonCell = document.createElement("td");
-        const readButton = document.createElement("button");
-        readButton.setAttribute("class", "read-button");
-        readButton.textContent = "Mark as read";
-        readButtonCell.appendChild(readButton);
+    const readButtonCell = document.createElement("td");
+    const readButton = document.createElement("button");
+    readButton.setAttribute("class", "read-button");
+    readButtonCell.appendChild(readButton);
 
-        const deleteButtonCell = document.createElement("td");
-        const deleteButton = document.createElement("button");
-        deleteButton.setAttribute("class", "delete-button");
-        deleteButton.textContent = "Delete";
-        deleteButtonCell.appendChild(deleteButton);
+    const deleteButtonCell = document.createElement("td");
+    const deleteButton = document.createElement("button");
+    deleteButton.setAttribute("class", "delete-button");
+    deleteButton.textContent = "Delete";
+    deleteButtonCell.appendChild(deleteButton);
 
-        bookRow.appendChild(bookTitle);
-        bookRow.appendChild(bookAuthor);
-        bookRow.appendChild(bookYear);
-        bookRow.appendChild(bookPages);
-        bookRow.appendChild(bookStatus);
-        bookRow.appendChild(readButtonCell);
-        bookRow.appendChild(deleteButtonCell);
+    bookRow.appendChild(bookTitle);
+    bookRow.appendChild(bookAuthor);
+    bookRow.appendChild(bookYear);
+    bookRow.appendChild(bookPages);
+    bookRow.appendChild(bookStatus);
+    bookRow.appendChild(readButtonCell);
+    bookRow.appendChild(deleteButtonCell);
+
+    if (library[i].read) {
+      bookRow.setAttribute("class", "read");
+      bookStatus.textContent = "Read";
+      readButton.textContent = "Mark as unread";
+    } else {
+      bookStatus.textContent = "Unread";
+      readButton.textContent = "Mark as read";
     }
+
+    readButton.addEventListener("click", () => {
+      bookRow.classList.toggle("read");
+      if (
+        bookStatus.textContent === "Read" &&
+        readButton.textContent === "Mark as unread"
+      ) {
+        bookStatus.textContent = "Unread";
+        readButton.textContent = "Mark as read";
+      } else {
+        bookStatus.textContent = "Read";
+        readButton.textContent = "Mark as unread";
+      }
+    });
+
+    deleteButton.addEventListener("click", () => {
+      library.splice(i, 1);
+      bookInfo.textContent = "";
+      displayBooks();
+    });
+  }
 }
