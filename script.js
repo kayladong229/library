@@ -7,21 +7,19 @@ function Book(title, author, year, pages, read) {
 }
 
 const library = [];
-
 const bookInfo = document.querySelector(".book-info");
-
 const newBookBtn = document.querySelector(".show-modal");
 const bookDialog = document.querySelector(".book-dialog");
-newBookBtn.addEventListener("click", () => {
-  bookDialog.showModal();
-});
-
 const bookForm = document.getElementById("book-form");
 const newTitle = document.getElementById("title");
 const newAuthor = document.getElementById("author");
 const newYear = document.getElementById("year");
 const newPages = document.getElementById("pages");
 const newRead = document.getElementById("read");
+
+newBookBtn.addEventListener("click", () => {
+  bookDialog.showModal();
+});
 
 function addBook() {
   const newBook = new Book(
@@ -41,6 +39,11 @@ bookForm.addEventListener("submit", (e) => {
   addBook();
   bookInfo.textContent = "";
   displayBooks();
+  newTitle.value = "";
+  newAuthor.value = "";
+  newYear.value = "";
+  newPages.value = "";
+  newRead.checked = false;
 });
 
 function displayBooks() {
