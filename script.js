@@ -29,7 +29,6 @@ function addBook() {
     newPages.value,
     newRead.checked
   );
-  console.log(newBook);
   library.push(newBook);
 }
 
