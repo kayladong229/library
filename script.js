@@ -1,9 +1,20 @@
-function Book(title, author, year, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.year = year;
-  this.pages = pages;
-  this.read = read;
+// function Book(title, author, year, pages, read) {
+//   this.title = title;
+//   this.author = author;
+//   this.year = year;
+//   this.pages = pages;
+//   this.read = read;
+// }
+
+//Converting above constructor function to class
+class Book {
+  constructor(title, author, year, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.year = year;
+    this.pages = pages;
+    this.read = read;
+  }
 }
 
 const library = [];
